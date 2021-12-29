@@ -18,7 +18,7 @@ def base_pipeline():
             node(
                 func = create_descriptives,
                 inputs = ["data", "table_name"],
-                outputs = "json_data",
+                outputs = ["json_data", "html_data", "output_data"],
                 name = "create_descriptives"
             )
         ]
@@ -40,7 +40,8 @@ def create_pipeline(**kwargs):
                 "table_name": str(f"{table_name}"),
             },
             outputs = {
-                "json_data": f"json_{table_name}"
+                "json_data": f"json_{table_name}",
+                "html_data": f"json_{table_name}",
             },
             namespace = f"{table_name}",
         )
