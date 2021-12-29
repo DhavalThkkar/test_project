@@ -1,0 +1,9 @@
+train:
+  type: pandas.CSVDataSet
+  filepath: data/01_raw/train.csv
+  layer: raw
+
+test:
+  type: pandas.CSVDataSet
+  filepath: data/01_raw/test.csv
+  layer: raw
