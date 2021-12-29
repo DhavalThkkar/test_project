@@ -6,3 +6,11 @@
 tables:
   - train
   - test
+  # - one # If you comment this out and try Kedro Viz this will work for any number of arguments so long as they actually exist as raw inputs
+  # - two
+  # - three
+  # - four
+  # - five
+  # - six
+  # - seven
+  

@@ -3,32 +3,21 @@ This is a boilerplate pipeline 'raw_data_load'
 generated using Kedro 0.17.6
 """
 
-from typing import List
+from typing import Any, Dict, List, Tuple
 from pandas_profiling import ProfileReport
 
 import pandas as pd
-import json
+
 
 def create_descriptives(
-    data: pd.DataFrame, 
-    table_name: str
-): 
+    data: pd.DataFrame, table_name: str
+) -> Tuple[Dict[str, Any], str, pd.DataFrame]:
 
-    #print(table_name)
-    # Create the profiling report
     profile = ProfileReport(
-        data, title=f"{table_name} Profiling Report", 
-        config_file="config_minimal.yml"
+        data, title=f"{table_name} Profiling Report", config_file="config_minimal.yml"
     )
 
-    # Save the report as an HTML file and JSON for further usage
-    profile.to_file(f"data/descriptives/{table_name}.html") 
-    # It doesn't save this as data/descriptives/train.html but instead it saves the whole dataframe
-    # I really dont know why
-    
-    json_data = json.loads(profile.to_json())
+    profile_json = profile.to_json()
+    profile_html_string = profile.to_html()
 
-    with open(f"data/02_intermediate/{table_name}.json", "w") as file:
-        json.dump(json_data, file)
-
-    return json_data
+    return profile_json, profile_html_string, data

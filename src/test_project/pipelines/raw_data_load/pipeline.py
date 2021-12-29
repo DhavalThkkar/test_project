@@ -18,13 +18,13 @@ def base_pipeline():
             node(
                 func = create_descriptives,
                 inputs = ["data", "table_name"],
-                outputs = "json_data",
+                outputs = ["json_data", "html_data", "output_data"],
                 name = "create_descriptives"
             )
         ]
     )
 
-def create_pipeline(**kwargs):
+def create_pipeline(**kwargs) -> Pipeline:
 
     conf_paths = ["conf/base", "conf/local"]
     conf_loader = ConfigLoader(conf_paths)
@@ -40,11 +40,14 @@ def create_pipeline(**kwargs):
                 "table_name": str(f"{table_name}"),
             },
             outputs = {
-                "json_data": f"json_{table_name}"
+                "json_data": f"{table_name}.json_profile",
+                "html_data": f"{table_name}.html_profile",
+                "output_data" : f"{table_name}.pickled"
             },
-            namespace = f"{table_name}",
+            namespace = table_name,
         )
         for table_name in sql_data
     ]
     
-    return Pipeline(table_pipelines)
+    # Second level of namespace nesting!
+    return pipeline(sum(table_pipelines), namespace='profiling')

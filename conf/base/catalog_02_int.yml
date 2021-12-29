@@ -1,0 +1,31 @@
+# THIS IS THE MANUAL EQUIVALENT OF THE PROFILING HOOK
+
+# ### HTML ###
+# test.html_profile:
+#   type: text.TextDataSet
+#   filepath: data/02_intermediate/test.html
+
+# train.html_profile:
+#   type: text.TextDataSet
+#   filepath: data/02_intermediate/train.html
+
+# ### JSON ###
+# test.json_profile:
+#   type: json.JSONDataSet
+#   filepath: data/02_intermediate/test.json
+
+# train.json_profile:
+#   type: json.JSONDataSet
+#   filepath: data/02_intermediate/train.json
+
+# ### PICKLE ###
+# test.pickled:
+#   type: pickle.PickleDataSet
+#   filepath: data/02_intermediate/test.pkl
+
+# train.pickled:
+#   type: pickle.PickleDataSet
+#   filepath: data/02_intermediate/train.pkl
+
+
+
