@@ -17,34 +17,34 @@ def base_pipeline():
         [
             node(
                 func = create_descriptives,
-                inputs = ["data", "table_name"],
+                inputs = ["data", "parameters"],
                 outputs = "json_data",
                 name = "create_descriptives"
             )
         ]
     )
 
-def create_pipeline(**kwargs):
+def create_pipeline(**kwargs) -> Pipeline:
 
     conf_paths = ["conf/base", "conf/local"]
     conf_loader = ConfigLoader(conf_paths)
-    parameters = conf_loader.get("parameters*", "parameters*/**")
-    
-    sql_data = parameters["tables"]
+    sql_data = conf_loader.get("parameters*", "parameters*/**")
 
     table_pipelines = [
         pipeline(
             pipe = base_pipeline(),
+            parameters = {
+                "parameters": f"params:{table_name}"
+            },
             inputs = {
-                "data": f"{table_name}", 
-                "table_name": str(f"{table_name}"),
+                "data": f"{table_name}"
             },
             outputs = {
                 "json_data": f"json_{table_name}"
             },
-            namespace = f"{table_name}",
+            namespace = table_name,
         )
         for table_name in sql_data
     ]
-    
+
     return Pipeline(table_pipelines)
